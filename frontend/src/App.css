@@ -1,0 +1,24 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0;
+}
+.image-container {
+  width: 100%;
+  overflow: hidden; /* image bahar na nikle */
+}
+
+.moving-img {
+  width: 300px; /* apne hisaab se set karo */
+  animation: moveLeft 10s linear infinite; /* 10s = speed */
+}
+
+@keyframes moveLeft {
+  from {
+    transform: translateX(100%); /* right se start */
+  }
+  to {
+    transform: translateX(-100%); /* left ki taraf chale */
+  }
+}
+
