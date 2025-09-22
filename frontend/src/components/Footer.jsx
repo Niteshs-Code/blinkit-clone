@@ -1,20 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaFacebookF } from "react-icons/fa";
 import { PiXLogoDuotone } from "react-icons/pi";
 import { IoLogoInstagram } from "react-icons/io";
 import { FaLinkedinIn } from "react-icons/fa6";
 import { FaThreads } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa6";
+import { FaMinus } from "react-icons/fa6";
 
 import apple from "../assets/applestore.webp";
 import google from "../assets/googlestore.webp"
 
 const footer = () => {
-  return (
-    <>
-      <div className='w-[80%] m-auto lg:block hidden'>
-        <div className='w-full m-auto p-1 flex mt-20 mb-20 '>
+
+  const [on, seton] = useState(true);
+  // footerrenderforcondition
+  const bottom =(<div className='lg:w-[80%] w-[98%] lg:m-auto lg:block mx-3'>
+        <div className='w-[100%]  m-auto p-1 flex mt-20 mb-20 flex-col lg:flex-row gap-y-15'>
           {/* left side fotter */}
-          <div className='w-[30%]  '>
+          <div className='lg:w-[30%]   w-full '>
             <h2 className='text-lg font-bold '>Usefull Links</h2>
             <div className='flex gap-x-24  mt-3 text-gray-500 '>
 
@@ -45,11 +48,11 @@ const footer = () => {
           </div>
 
 
-          <div className='w-[65%] ml-20 '>
+          <div className='lg:w-[65%] lg:ml-20 '>
             <h2 className='inline mr-3 text-lg font-bold'>Categories </h2> <a className='inline text-green-600 text-lg' href='#'>See all</a>
-           <div className='flex gap-x-3 mt-3 text-gray-500'>
+           <div className='lg:flex gap-x-3 mt-3 text-gray-500 grid-cols-2 grid gap-y-12'>
               {/* column1 */}
-              <div className='flex flex-col gap-y-2 w-[32%] '>
+              <div className='flex flex-col gap-y-2 lg:w-[32%] '>
                 <a href="" className="hover:text-gray-700">Vegetables & Fruits</a>
                 <a href="" className="hover:text-gray-700">Cold Drinks & Juices</a>
                 <a href="" className="hover:text-gray-700">Bakery & Biscuits</a>
@@ -63,7 +66,7 @@ const footer = () => {
                 <a href="" className="hover:text-gray-700">E-Gift Cards</a>
               </div>
               {/* columm2 */}
-              <div className='flex flex-col gap-y-2  w-[32%]'>
+              <div className='flex flex-col gap-y-2  lg:w-[32%]'>
                 <a href="" className="hover:text-gray-700">Dairy & Breakfast</a>
                 <a href="" className="hover:text-gray-700">Instant & Frozen Food</a>
                 <a href="" className="hover:text-gray-700">Sweet Tooth</a>
@@ -77,7 +80,7 @@ const footer = () => {
                 <a href="" className="hover:text-gray-700">Rakhi Gifts</a>
               </div>
               {/* column3 */}
-              <div className='flex flex-col gap-y-2 w-[32%] '>
+              <div className='flex flex-col gap-y-2 lg:w-[32%] '>
                 <a href="" className="hover:text-gray-700">Munchies</a>
                 <a href="" className="hover:text-gray-700">Tea, Coffee & Health Drinks</a>
                 <a href="" className="hover:text-gray-700">Atta, Rice & Dal</a>
@@ -96,13 +99,13 @@ const footer = () => {
 
 
         </div>
-        <div className='w-full p-1 flex items-center justify-evenly'>
+        <div className='bg-  w-full p-1 flex items-center justify-evenly  flex-col lg:flex-row gap-y-10 '>
           <div className='text-gray-500 font-semibold text-sm'>© Blink Commerce Private Limited, 2016-2025</div>
-          <div className='font-bold text-gray-500 text-lg flex gap-x-2'><span className='mr-4'>Downolad</span>
+          <div className='font-bold text-gray-500 text-lg flex gap-x-2 bg-white'><span className='mr-4'>Downolad</span>
             <img src={apple} className='w-25' />
             <img src={google} className='w-25 ' />
           </div>
-          <div className='flex gap-x-6 ml-4'>
+          <div className='flex gap-x-6 lg:ml-4'>
 
 
 
@@ -116,12 +119,20 @@ const footer = () => {
           </div>
 
         </div>
-        <div className='w-full p-2 m-4'>
-          <p className='text-gray-500 text-sm'> “Blinkit” is owned & managed by "Blink Commerce Private Limited" and is not related, linked or interconnected in whatsoever manner or nature, to “GROFFR.COM” which is a real estate services business operated by “Redstone Consultancy Services Private Limited”.</p>
+        <div className='lg:w-full lg:p-2 lg:m-4 mt-9'>
+          <p className='text-gray-500 text-sm mb-25 text-left lg:m-0'> “Blinkit” is owned & managed by "Blink Commerce Private Limited" and is not related, linked or interconnected in whatsoever manner or nature, to “GROFFR.COM” which is a real estate services business operated by “Redstone Consultancy Services Private Limited”.</p>
         </div>
         
-      </div>
-      <div className='w-full text-gray-500 lg:hidden m-3 font-semibold'>Indai's last minute app - blinkit</div>
+      </div>)
+  //
+  
+  return (
+    <>
+       <div className='hidden lg:block'>{bottom}</div>
+       <div className='text-gray-300  font-bold'><hr /></div>
+      <div className='flex justify-between mx-2  shadow  w-98% '><p className=' text-gray-400 lg:hidden m-3 font-bold'>Indai's last minute app - blinkit</p><button onClick={()=>seton(!on)} className='text-gray-400'>{ on ? <FaPlus />  : <FaMinus />}</button></div>
+      <div>{!on && bottom}</div>
+      
     </>
 
   )

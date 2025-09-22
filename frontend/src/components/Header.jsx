@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
 import { ReactTyped } from "react-typed";
 import { IoSearchOutline } from "react-icons/io5";
 import { SlBasket } from "react-icons/sl";
@@ -12,18 +13,23 @@ import banner from "../assets/download.jpg"
 
 
 const Header = () => {
+    //  notify
+    const notify = () => {
+        toast("sorry!, This is dumy website You can't login")
+    }
+
     // forinput
     const [focus, setfocus] = useState(false)
     // formodal
     const [open, setOpen] = useState(false);
     // scrollerror
     useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden"; // disable scroll
-    } else {
-      document.body.style.overflow = "auto"; // enable scroll
-    }
-  }, [open]);
+        if (open) {
+            document.body.style.overflow = "hidden"; // disable scroll
+        } else {
+            document.body.style.overflow = "auto"; // enable scroll
+        }
+    }, [open]);
 
 
 
@@ -76,9 +82,9 @@ const Header = () => {
         <div className="fixed inset-0 flex items-center lg:justify-center  flex-col justify-between">
 
 
-            <div className="absolute inset-0 backdrop-blur-md  lg:bg-transparent "></div>
+            <div className="absolute inset-0 backdrop-blur-md  lg:bg-transparent bg-white"></div>
 
-            <div  style={{ width: "70rem", overflow: "hidden" }} className="bg-white h-auto absolute lg:hidden ">
+            <div style={{ width: "70rem", overflow: "hidden" }} className="bg-white h-auto absolute lg:hidden ">
                 <div className='relative bg-black   shadow-md rounded-full text-black'>{backButton}</div>
 
                 <style>
@@ -91,7 +97,7 @@ const Header = () => {
                 </style>
 
                 {/* Wrapper jisme 2 images repeat hongi */}
-                <div
+                <div 
                     style={{
                         display: "flex",
                         width: "calc(70rem * 2)", // 2 images side by side
@@ -146,7 +152,7 @@ const Header = () => {
                     </div>
 
                     <div className="w-3/4">
-                        <button className="w-full p-2 bg-gray-400 text-white rounded-xl hover:bg-gray-500">
+                        <button className="w-full p-2 bg-gray-400 text-white rounded-xl hover:bg-gray-500" onClick={notify}>
                             Continue
                         </button>
                     </div>
@@ -209,17 +215,32 @@ const Header = () => {
                     <div className='flex items-center pl-2 w-[200px] '>{!focus && (<button className="cursor-pointer text-lg mr-35 ml-4 hover:bg-gra lg:block hidden" onClick={() => setOpen(true)} >Login</button>)}
 
                         {/* mycartbutton */}
-                        <button className={`bg-gray-100 px-4 py-2 ${open ? "blur": ""}absolute right-0 rounded-lg lg:flex items-center  text-gray-400 ml-4 cursor-pointer hover:bg-gray-200 hover:scale-100 hidden`}>
+                        <button className={`bg-gray-100 px-4 py-2 ${open ? "blur" : ""}absolute right-0 rounded-lg lg:flex items-center  text-gray-400 ml-4 mr-4 cursor-pointer hover:bg-gray-200 hover:scale-100 hidden`}>
                             <SlBasket /> <span className='mx-2'>My Cart</span>
                         </button>
 
                         {/* userbutton forsmall screen */}
-                        <button className={`absolute ${open ? "hidden" : "block"}  right-0 cursor-pointer lg:hidden block text-2xl`} onClick={() => setOpen(true)}><FaRegUserCircle /></button>
+                        <button className={`absolute ${open ? "hidden" : "block"}  right-4 cursor-pointer lg:hidden block text-2xl`} onClick={() => setOpen(true)}><FaRegUserCircle /></button>
                     </div>
                 </div>
                 <div className='w-full lg:hidden pl-2 pr-2 p-2'>{search}</div>
 
             </header>
+            <ToastContainer
+                position="top-center"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+
+            />
+
+
 
         </>
     )

@@ -15,7 +15,7 @@ function App() {
        <Header/>
        <Menu/>
       
-       <Data/>
+       {/* <Data/> */}
        <Footer/>
 
        
