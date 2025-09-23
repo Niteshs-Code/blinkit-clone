@@ -187,8 +187,8 @@ const Header = () => {
 
     return (
         <>
-            <header >
-                <div className='flex items-center justify-between px-5  lg:shadow-md  bg-gray-50'>
+            <header className='fixed top-0 right-0 left-0 bg-white' >
+                <div className='flex items-center justify-between px-5 lg:shadow-md  bg-gray-50'>
                     {/* modal for login */}
                     {open && (loginModal)}
                     {/* Logo */}
@@ -208,7 +208,7 @@ const Header = () => {
 
                     {/* Search Bar */}
 
-                    <div className='hidden lg:block w-full'>{search}</div>
+                    <div className='hidden lg:block w-full '>{search}</div>
 
                     {/* Right Section */}
 

@@ -6,7 +6,8 @@ import { FaLinkedinIn } from "react-icons/fa6";
 import { FaThreads } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa6";
-
+import { FaHeart } from "react-icons/fa6";
+import bottombanner from "../assets/bottombannner.avif"
 import apple from "../assets/applestore.webp";
 import google from "../assets/googlestore.webp"
 
@@ -129,6 +130,9 @@ const footer = () => {
   return (
     <>
        <div className='hidden lg:block'>{bottom}</div>
+       <div> <img src={bottombanner}  />
+       <p className='text-7xl text-gray-300 font-bold p-12 mt-12 mb-10'>India's last minute app<FaHeart className='text-red-400 inline ml-5'/></p>
+       <hr className=' text-gray-300 mt-10 mb-10'/><p className='m-14 text-gray-300 text-5xl font-bold'>Blinkit</p></div>
        <div className='text-gray-300  font-bold'><hr /></div>
       <div className='flex justify-between mx-2  shadow  w-98% '><p className=' text-gray-400 lg:hidden m-3 font-bold'>Indai's last minute app - blinkit</p><button onClick={()=>seton(!on)} className='text-gray-400'>{ on ? <FaPlus />  : <FaMinus />}</button></div>
       <div>{!on && bottom}</div>
