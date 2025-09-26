@@ -216,7 +216,8 @@ const Header = () => {
 
                         {/* mycartbutton */}
                         <button className={`bg-gray-100 px-4 py-2 ${open ? "blur" : ""}absolute right-0 rounded-lg lg:flex items-center  text-gray-400 ml-4 mr-4 cursor-pointer hover:bg-gray-200 hover:scale-100 hidden`}>
-                            <SlBasket /> <span className='mx-2'>My Cart</span>
+                            <div className=''><SlBasket /> <span className='mx-2'>My Cart</span></div>
+                        
                         </button>
 
                         {/* userbutton forsmall screen */}

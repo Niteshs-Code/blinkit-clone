@@ -1,81 +1,119 @@
-import React, { useEffect, useState } from "react";
+import { FaPlus, FaMinus } from "react-icons/fa6";
+import { useState, useEffect } from "react";
 
+const customSections = {
+  "Beauty & Personal Care": ["fragrances", "skincare"],
+  "Electronics": ["smartphones", "laptops"],
+  "Clothing": ["mens-shirts", "womens-dresses", "shoes"],
+  "Home & Living": ["home-decoration", "furniture", "lighting"],
+  "Food & Groceries": ["groceries"],
+};
 
-[
-  "smartphones",
-  "laptops",
-  "fragrances",
-  "skincare",
-  "groceries",
-  "home-decoration",
-  "furniture",
-  "womens-dresses",
-  "mens-shirts",
-  "shoes",
-  "watches",
-  "motorcycle",
-  "lighting"
-]
-
-export default function ProductsByCategory() {
-  const [categories, setCategories] = useState([]);
+export default function ProductsBySection() {
   const [allProducts, setAllProducts] = useState({});
+  const [quantities, setQuantities] = useState({}); // store productId -> quantity
 
-  // Step 1: Fetch categories
-  useEffect(() => {
-    fetch("https://dummyjson.com/products/categories")
-      .then((res) => res.json())
-      .then((data) => setCategories(data));
-  }, []);
-
-  // Step 2: Fetch products for each category
   useEffect(() => {
     const fetchAll = async () => {
       const results = {};
-      for (let category of categories) {
-        try {
-          const res = await fetch(
-            `https://dummyjson.com/products/category/${category}`
-          );
-          const data = await res.json();
-          results[category] = data.products;
-        } catch (err) {
-          console.error("Error fetching:", category, err);
-          results[category] = [];
+
+      for (let [section, categories] of Object.entries(customSections)) {
+        results[section] = [];
+
+        for (let category of categories) {
+          try {
+            const res = await fetch(
+              `https://dummyjson.com/products/category/${category}`
+            );
+            const data = await res.json();
+            results[section] = [...results[section], ...data.products]; // merge products
+          } catch (err) {
+            console.error("Error fetching:", category, err);
+          }
         }
       }
+
       setAllProducts(results);
     };
 
-    if (categories.length > 0) {
-      fetchAll();
-    }
-  }, [categories]);
+    fetchAll();
+  }, []);
+
+  // Increase quantity
+  const increaseQty = (id) => {
+    setQuantities((prev) => ({
+      ...prev,
+      [id]: (prev[id] || 0) + 1,
+    }));
+  };
+
+  // Decrease quantity
+  const decreaseQty = (id) => {
+    setQuantities((prev) => {
+      const current = prev[id] || 0;
+      if (current <= 1) {
+        // remove if 0
+        const { [id]: _, ...rest } = prev;
+        return rest;
+      }
+      return { ...prev, [id]: current - 1 };
+    });
+  };
 
   return (
-    <div className="p-4">
-      {categories.map((category) => (
-        <div key={category} className="mb-12">
-          {/* Section heading */}
-          <h2 className="text-xl font-bold mb-4 capitalize">{category[0]}</h2>
+    <div className="lg:w-[80%] m-auto w-[95%] mt-30">
+      {Object.keys(customSections).map((section) => (
+        <div key={section} className="mb-12 pb-2">
+          <h2 className="text-2xl ml-2 font-bold mb-1">{section}</h2>
 
-          {/* Products grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {allProducts[category]?.length > 0 ? (
-              allProducts[category].map((item) => (
-                <div
-                  key={item.id}
-                  className="border rounded-xl p-3 shadow-sm hover:shadow-md transition"
-                >
-                  <img
-                    src={item.thumbnail}
-                    alt={item.title}
-                    className="w-full h-32 object-contain mb-2"
-                  />
-                  <p className="font-medium text-sm">{item.title}</p>
-                  <p className="text-gray-600 text-sm">₹{item.price}</p>
-                </div>
-              ))
+          <div className="flex overflow-x-auto gap-x-4 scrollbar-hide">
+            {allProducts[section]?.length > 0 ? (
+              allProducts[section].map((item) => {
+                const qty = quantities[item.id] || 0;
+
+                return (
+                  <div
+                    key={item.id}
+                    className="flex-shrink-0 lg:border-1 lg:border-gray-300 rounded-xl p-3 shadow-sm hover:shadow-md transition w-48"
+                  >
+                    <img
+                      src={item.thumbnail}
+                      alt={item.title}
+                      className="w-full h-50 object-contain mb-2 border-1 border-gray-200 lg:border-none rounded-2xl"
+                    />
+                    <p className="font-medium text-sm">
+                      {item.title.length > 20
+                        ? item.title.substring(0, 20) + "..."
+                        : item.title}
+                    </p>
+
+                    <div className="mt-7 flex justify-between items-center">
+                      <p className="text-gray-600 text-sm font-semibold">₹{item.price}</p>
+
+                      {qty === 0 ? (
+                        <button
+                          onClick={() => increaseQty(item.id)}
+                          className="text-sm text-green-700 b px-4 py-1 border-1 border-green-600 cursor-pointer rounded-[7px] font-bold h-8"
+                        >
+                          ADD
+                        </button>
+                      ) : (
+                        <div className="flex items-center border bg-green-600 rounded-[7px] px-2 p-[0.4rem] border-none">
+                          <button onClick={() => decreaseQty(item.id)}>
+                            <FaMinus className="text-[12px] cursor-pointer text-white font-semibold" />
+                          </button>
+                          <p className="mx-2 font-bold text-white text-sm">
+                            {qty}
+                          </p>
+                          <button onClick={() => increaseQty(item.id)}>
+                            <FaPlus className="text-[12px] cursor-pointer text-white font-semibold" />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })
             ) : (
               <p className="text-gray-400">No products found</p>
             )}
@@ -85,9 +123,6 @@ export default function ProductsByCategory() {
     </div>
   );
 }
-
-
-
 
 
 
