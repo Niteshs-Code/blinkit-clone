@@ -2,7 +2,6 @@ import { useState } from 'react'
 import Header from './components/Header'
 import Menu from './components/Menu'
 import Footer from './components/footer'
-// import Data from "./components/ProductList"
 import ProductsByCategory from './components/ProductsByCategory'
 
 
@@ -16,7 +15,6 @@ function App() {
        <Header/>
        <Menu/>
       <ProductsByCategory/>
-       {/* <Data/> */}
        <Footer/>
 
        
